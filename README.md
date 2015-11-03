@@ -120,6 +120,14 @@ Skip tracking CSRF failures
 skip_before_filter :track_unverified_request
 ```
 
+Custom request storage
+
+Notable is built to store request details with [RequestStore](https://github.com/steveklabnik/request_store). If you want to change the way it stores information to an alternative like [RequestLocals](https://github.com/ElMassimo/request_store_rails) you may change the default
+
+```ruby
+Notable.request_store = RequestLocals
+```
+
 ### Jobs
 
 Set slow threshold
