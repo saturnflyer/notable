@@ -27,6 +27,10 @@ module Notable
     attr_accessor :track_request_method
     attr_accessor :user_method
     attr_accessor :slow_request_threshold
+    attr_accessor :request_store
+    if defined?(RequestStore)
+      self.request_store = RequestStore
+    end
 
     # jobs
     attr_accessor :track_job_method
@@ -44,7 +48,7 @@ module Notable
   self.slow_job_threshold = 60
 
   def self.track(note_type, note = nil)
-    (RequestStore.store[:notable_notes] ||= []) << {note_type: note_type, note: note}
+    (request_store.store[:notable_notes] ||= []) << {note_type: note_type, note: note}
   end
 
   def self.track_error(e)
@@ -52,11 +56,11 @@ module Notable
   end
 
   def self.notes
-    RequestStore.store[:notable_notes].to_a
+    request_store.store[:notable_notes].to_a
   end
 
   def self.clear_notes
-    RequestStore.store.delete(:notable_notes)
+    request_store.store.delete(:notable_notes)
   end
 
   def self.track_job(job, job_id, queue, created_at, &block)

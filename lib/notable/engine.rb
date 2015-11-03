@@ -3,7 +3,9 @@ module Notable
     isolate_namespace Notable
 
     initializer "notable" do |app|
-      app.config.middleware.insert_after RequestStore::Middleware, Notable::Middleware
+      if defined?(RequestStore)
+        app.config.middleware.insert_after RequestStore::Middleware, Notable::Middleware
+      end
     end
   end
 end
