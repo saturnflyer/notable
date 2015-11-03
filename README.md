@@ -128,6 +128,12 @@ Notable is built to store request details with [RequestStore](https://github.com
 Notable.request_store = RequestLocals
 ```
 
+You may need to update your rack middleware accordingly
+
+```ruby
+app.config.middleware.insert_after RequestStoreRails::Middleware, Notable::Middleware
+```
+
 ### Jobs
 
 Set slow threshold
